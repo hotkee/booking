@@ -1,8 +1,0 @@
-<?xml version = "1.0" encoding="utf-8"?>
-<openerp>
-    <data>
-        <record id="resource_calendar" model="resource.calendar">
-            <field name="name">45 Hours/Week</field>
-        </record>
-    </data>
-</openerp>
