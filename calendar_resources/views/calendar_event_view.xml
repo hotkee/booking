@@ -1,0 +1,129 @@
+<?xml version = "1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_calendar_resources_event_form" model="ir.ui.view">
+            <field name="name">Calendar: resources</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='partner_ids']"
+                       position="attributes">
+                    <attribute name="class"></attribute>
+                </xpath>
+                <xpath expr="//label[@for='description']" position="before">
+
+                    <group>
+                        <group>
+                            <field name="resource_ids" options="{'no_create': True , 'no_open':True}"/>
+                        </group>
+                        <group></group>
+                    </group>
+
+
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_calendar_resources_event_tree" model="ir.ui.view">
+            <field name="name">Calendar: resources</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_tree"/>
+            <field name="arch" type="xml">
+
+                <field name="name" position="before">
+
+                    <field name="resource_ids"/>
+
+
+                </field>
+            </field>
+        </record>
+
+        <record id="view_calendar_resources_event_form_popup"
+                model="ir.ui.view">
+            <field name="name">Calendar popup: resources</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id"
+                   ref="calendar.view_calendar_event_form_popup"/>
+            <field name="arch" type="xml">
+                <field name="partner_ids" position="after">
+                    <field name="resource_ids"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_calendar_resources_event_calendar"
+                model="ir.ui.view">
+            <field name="name">Calendar: resources</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id"
+                   ref="calendar.view_calendar_event_calendar"/>
+            <field name="arch" type="xml">
+                <calendar position="replace">
+                    <calendar string="Booking" date_start="start" date_stop="stop" date_delay="duration"
+                              all_day="allday"
+                              display="[user_id]-[name]" color="resource_ids" attendee="resource_ids" quick_add="False"
+                              use_contacts="False" mode="month"
+                              event_open_popup="%(calendar.view_calendar_event_form_popup)s">
+                        <field name="name"/>
+                        <field name="user_id"/>
+                        <!--<field name="color_partner_id"/>-->
+                        <!--<field name="partner_ids"/>-->
+                    </calendar>
+
+                </calendar>
+
+
+            </field>
+        </record>
+
+
+        <record id="view_calendar_resources_event_gantt" model="ir.ui.view">
+            <field name="name">Calendar: resources Gantt</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id"
+                   ref="calendar.view_calendar_event_gantt"/>
+            <field name="arch" type="xml">
+                <gantt position="replace">
+                    <gantt date_delay="duration" date_start="start" string="Booking" default_group_by="resource_ids"
+                           mode="week"/>
+                </gantt>
+
+            </field>
+        </record>
+
+
+        <menuitem name="Meetings"
+                  id="top_menu_meetings"
+                  sequence="10"
+                />
+
+
+        <menuitem name="Meetings"
+                  id="meeting_menu_meetings"
+                  parent="top_menu_meetings"
+                  sequence="1"
+                />
+
+        <menuitem name="Configuration"
+                  id="meeting_menu_config"
+                  parent="top_menu_meetings"
+                  sequence="2"
+                />
+
+        <menuitem name="Booking"
+                  id="meeting_menu_calendar"
+                  parent="meeting_menu_meetings"
+                  sequence="10"
+                  action="calendar.action_calendar_event"/>
+
+
+        <menuitem name="Users"
+                  id="meeting_menu_users"
+                  parent="meeting_menu_config"
+                  sequence="10"
+                  action="base.action_res_users"/>
+
+
+    </data>
+</openerp>
